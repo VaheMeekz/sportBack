@@ -11,6 +11,7 @@ module.exports = {
             firstName: Sequelize.STRING,
             lastName: Sequelize.STRING,
             email: Sequelize.STRING,
+            password:Sequelize.STRING,
             skype: Sequelize.STRING,
             telegram: Sequelize.STRING,
             whatsapp: Sequelize.STRING,

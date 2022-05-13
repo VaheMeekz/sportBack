@@ -33,7 +33,7 @@ const createMessage = async (req, res) => {
             return res.json(newMessage)
         }
     } catch (e) {
-        console.log("something went wrong")
+        console.log("something went wrong",e)
     }
 }
 

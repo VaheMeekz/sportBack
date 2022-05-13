@@ -113,10 +113,11 @@ io.on("connection", (socket) => {
         })
     })
 //chat start
-    socket.on("sendMessage", ({ senderId, receiverId, text, senderName }) => {
+    socket.on("sendMessage", ({ senderId,senderImage, receiverId, text, senderName }) => {
         const user = getUser(receiverId);
         user &&  io.emit("getMessage", {
             senderId,
+            senderImage,
             senderName,
             receiverId,
             text,
