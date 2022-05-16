@@ -14,7 +14,9 @@ const inviteRouter = require('./routes/teamInvites')
 const activityController = require('./routes/activity')
 const activityInviteRouter = require('./routes/activityInvite')
 const messageRouter = require('./routes/messages')
+const userService = require("./services/status.service")
 const app = express();
+app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +38,6 @@ app.use('/api/v1/activity', activityController)
 app.use('/api/v1/activityInvite', activityInviteRouter)
 app.use('/api/v1/message', messageRouter)
 // app.use('/api/v1/userSport', userSportRouter);
-app.use(cors())
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
@@ -54,14 +55,16 @@ app.use(function (err, req, res, next) {
 //------------------------------------------------ sockets start -------------------------------------------------------
 
 let users = []
+console.log(users, "users");
 
 const addUser = (userId, socketId) => {
-    !users.some((user) => user.userId === userId) &&
-    users.push({userId, socketId});
+    !users.some((user) => user.userId === userId) && users.push({userId, socketId});
+    userService.setOnline(userId, socketId)
 };
 
 const removeUser = (socketId) => {
     users = users.filter((user) => user.socketId !== socketId);
+    userService.setOffline(socketId)
 };
 
 const getUser = (userId) => {
@@ -76,61 +79,39 @@ const io = require("socket.io")(process.env.SOCKET_PORT, {
 
 io.on("connection", (socket) => {
     //connect
-    console.log("user is conected 🚀");
-
+    console.log("user is conected!");
     //get userId and socketId
     socket.on("addUser", (userId) => {
         addUser(userId, socket.id);
         io.emit("getUsers", users);
     });
     //team invite
-    socket.on(
-        "sendInvition",
-        ({senderId, receiverId, teamName, senderName, status, teamImage}) => {
-            const user = getUser(receiverId);
-            user && io.emit("getInvitions", {
-                senderId,
-                senderName,
-                receiverId,
-                teamName,
-                status,
-                teamImage
-            });
-        }
-    );
+    socket.on("sendInvition", ({senderId, receiverId, teamName, senderName, status, teamImage}) => {
+        const user = getUser(receiverId);
+        user && io.emit("getInvitions", {
+            senderId, senderName, receiverId, teamName, status, teamImage
+        });
+    });
 //activity invite
-    socket.on("sendActivityInvite", ({creatorName, name, description, sport, lat, long, date, time,receiverId}) => {
+    socket.on("sendActivityInvite", ({creatorName, name, description, sport, lat, long, date, time, receiverId}) => {
         const user = getUser(receiverId);
         user && io.emit("getActivityInvite", {
-            creatorName,
-            name,
-            description,
-            sport,
-            lat,
-            long,
-            date,
-            time
+            creatorName, name, description, sport, lat, long, date, time
         })
     })
 //chat start
-    socket.on("sendMessage", ({ senderId,senderImage, receiverId, text, senderName }) => {
+    socket.on("sendMessage", ({senderId, senderImage, receiverId, text, senderName}) => {
         const user = getUser(receiverId);
-        user &&  io.emit("getMessage", {
-            senderId,
-            senderImage,
-            senderName,
-            receiverId,
-            text,
+        user && io.emit("getMessage", {
+            senderId, senderImage, senderName, receiverId, text,
         });
     });
 
-//chat end
     //disconnect
     socket.on("disconnect", () => {
-        removeUser(), console.log("a user is disconnected!");
+        removeUser(socket.id), console.log("a user is disconnected!");
         io.emit("getUsers", users);
     });
 });
-
 //---------------------------------------------------------- socket end ------------------------------------------------
 module.exports = app;

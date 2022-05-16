@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     Activity.hasMany(ActivityPeople, {
         foreignKey: "activity_id",
     });
-    Activity.hasOne(User, {
-        foreignKey: "id",
+    Activity.belongsTo(User, {
+        foreignKey: "creator_id",
         as: "Creator"
     })
     Activity.hasOne(Sport, {

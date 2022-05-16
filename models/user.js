@@ -32,7 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     youtube:DataTypes.STRING,
     token:DataTypes.STRING,
     userSport_id:DataTypes.INTEGER,
-    team_id:DataTypes.INTEGER
+    team_id:DataTypes.INTEGER,
+    status:DataTypes.BOOLEAN,
+    socketId:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
@@ -52,8 +54,8 @@ module.exports = (sequelize, DataTypes) => {
   User.hasMany(ActivityPeople,{
     foreignKey:"id"
   })
-  User.hasOne(Activity,{
-    foreignKey:"creator_id"
+  User.belongsTo(Activity,{
+    foreignKey:"id"
   })
 
 

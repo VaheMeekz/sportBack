@@ -24,33 +24,33 @@ function generateString(length) {
     return result;
 }
 
-const checkNumber = async (req,res) => {
-    try{
+const checkNumber = async (req, res) => {
+    try {
         const {number} = req.body
         // hamarin sms
-        return res.json({message:"Verify code sent your whatsapp account"})
-    }catch (e) {
-        console.log("something went wrong",e)
+        return res.json({message: "Verify code sent your whatsapp account"})
+    } catch (e) {
+        console.log("something went wrong", e)
     }
 }
 const create = async (req, res) => {
     try {
-            const {number,code} = req.body
+        const {number, code} = req.body
         const userCode = await Verify.findOne({
-            where:{number}
+            where: {number}
         })
-        if(userCode.code == code ){
+        if (userCode.code == code) {
             const oldUser = await Users.findOne({
-                where:{whatsapp:number}
+                where: {whatsapp: number}
             })
-            if(oldUser){
-                return res.json({message:"User whit this number alredy exist"})
-            }else {
+            if (oldUser) {
+                return res.json({message: "User whit this number alredy exist"})
+            } else {
                 const newUser = await Users.create({number})
                 await userCode.destroy()
                 return res.json(newUser)
             }
-        }else {
+        } else {
             return res.json({})
         }
 
@@ -60,29 +60,29 @@ const create = async (req, res) => {
     }
 }
 
-const loginCredentials = async (req,res) => {
-    try{
-        const {id,email,password} = req.body
-        const user = await Users.findOne({where:{id}})
+const loginCredentials = async (req, res) => {
+    try {
+        const {id, email, password} = req.body
+        const user = await Users.findOne({where: {id}})
         let encryptedPassword = await bcrypt.hash(password, 10);
         user.email = email
         user.password = encryptedPassword
         await user.save()
-        return res.json({answer:"true"})
-    }catch (e) {
+        return res.json({answer: "true"})
+    } catch (e) {
         console.log('something went wrog', e)
     }
 }
 
-const addCredentials = async (req,res) => {
+const addCredentials = async (req, res) => {
     try {
         const {id} = req.query
-        const user = await Users.findOne({where:{id}})
-        if(!(user.email && user.papassword)){
-            return res.json({message:"Add Credentials for login!"})
+        const user = await Users.findOne({where: {id}})
+        if (!(user.email && user.papassword)) {
+            return res.json({message: "Add Credentials for login!"})
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
@@ -162,7 +162,7 @@ const edit = async (req, res) => {
         } = req.body
 
         const user = await Users.findOne({where: {id}})
-        if(user) {
+        if (user) {
             user.firstName = firstName
             user.lastName = lastName
             user.email = email
@@ -180,13 +180,13 @@ const edit = async (req, res) => {
 
             await user.save()
             return res.json(user)
-        }else return res.json({message:"You cant change credentials"})
+        } else return res.json({message: "You cant change credentials"})
     } catch (e) {
         console.log('something went wrong', e)
     }
 }
 
-const conformPasswordAddCode = async (req,res) => {
+const conformPasswordAddCode = async (req, res) => {
     const {email} = req.body;
 
     const thisUSer = await User.findOne({where: {email}});
@@ -216,7 +216,7 @@ const conformPasswordAddCode = async (req,res) => {
             {
                 from: process.env.EMAIL,
                 to: email,
-                text:generateCode,
+                text: generateCode,
             },
             function (error, info) {
                 if (error) {
@@ -226,7 +226,7 @@ const conformPasswordAddCode = async (req,res) => {
                 }
             }
         );
-        return res.json({message:"Verify code sent in you email"});
+        return res.json({message: "Verify code sent in you email"});
     } catch (error) {
         return res.json({
             error: ["Something Is Wrong!"],
@@ -234,47 +234,68 @@ const conformPasswordAddCode = async (req,res) => {
     }
 }
 
-const checkVerifyCode = async (req,res) => {
-    try{
-        const {id,newCode} = req.body
-        const code = await Forgot.findOne({where:{
+const checkVerifyCode = async (req, res) => {
+    try {
+        const {id, newCode} = req.body
+        const code = await Forgot.findOne({
+            where: {
                 code: newCode,
                 user: id,
-            }})
-        if(code.code == newCode){
+            }
+        })
+        if (code.code == newCode) {
             await code.destroy()
-            return res.json({answer:"true"})
-        }else return res.json({answer:"false"})
-    }catch (e) {
-        console.log('something went wrong',e)
+            return res.json({answer: "true"})
+        } else return res.json({answer: "false"})
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
-const newPassword = async (req,res) => {
+const newPassword = async (req, res) => {
     try {
-        const {id,password} = req.body
+        const {id, password} = req.body
 
-        const user = await Users.findOne({where:{id}})
+        const user = await Users.findOne({where: {id}})
         let encryptedPassword = await bcrypt.hash(password, 10);
-        if(user){
+        if (user) {
             user.password = encryptedPassword
             await user.save()
-            return res.json({message:"true"})
+            return res.json({message: "true"})
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
 const getAll = async (req, res) => {
+    const {status} = req.query
+    const offset = Number.parseInt(req.query.offset) || 0;
+    const limit = Number.parseInt(req.query.limit) || 6;
+    const count = await Users.findAll()
     try {
-        const allUsers = await Users.findAll({
-            include: [{
-                model: UserSports,
-                include: [Sport]
-            }]
-        })
-        return res.json(allUsers)
+        if (status) {
+            const allUsers = await Users.findAll({
+                where: {status},
+                offset: offset * limit,
+                limit,
+                include: [{
+                    model: UserSports,
+                    include: [Sport]
+                }]
+            })
+            return res.json({paginateUsers:allUsers,count:count.count})
+        } else {
+            const allUsers = await Users.findAll({
+                include: [{
+                    model: UserSports,
+                    include: [Sport],
+                    offset: offset * limit,
+                    limit,
+                }]
+            })
+            return res.json({paginateUsers:allUsers,count:count.count})
+        }
     } catch (e) {
         console.log('something went wrong', e)
     }

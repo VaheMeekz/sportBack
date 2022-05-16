@@ -7,7 +7,15 @@ const {Op} = require("sequelize");
 const createMessage = async (req, res) => {
     try {
         const {sender_id, receiver_id, text} = req.body
-        const old = await Conversation.findOne({where: {sender_id, receiver_id}})
+        const old = await Conversation.findOne({
+            where: {
+                sender_id: {
+                    [Op.or]: [sender_id, receiver_id]
+                }, receiver_id: {
+                    [Op.or]: [sender_id, receiver_id]
+                }
+            }
+        })
         if (!old) {
             const newConversation = await Conversation.create({
                 sender_id, receiver_id
@@ -17,7 +25,7 @@ const createMessage = async (req, res) => {
                 receiver_id,
                 text,
                 conversation_id: newConversation.id,
-                like: null,
+                like: "0",
                 seen: false
             })
             return res.json(newMessage)
@@ -33,14 +41,24 @@ const createMessage = async (req, res) => {
             return res.json(newMessage)
         }
     } catch (e) {
-        console.log("something went wrong",e)
+        console.log("something went wrong", e)
+    }
+}
+
+const deleteConversation = async (req, res) => {
+    try {
+        const {conversation_id} = req.body
+        const itam = await Conversation.destroy({where: {id: conversation_id}})
+        return res.json({message: "Deleted"})
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
 const getMessages = async (req, res) => {
     try {
         const {conversation_id} = req.query
-        const messages = await Message.findAll({where: {conversation_id}})
+        const messages = await Message.findAll({where: {conversation_id}, order: [["createdAt", "ASC"]],})
         return res.json(messages)
     } catch (e) {
         console.log('something went wrong', e)
@@ -52,7 +70,8 @@ const unsetMessage = async (req, res) => {
         const {sender_id, message_id} = req.body
         const message = await Message.findOne({where: {id: message_id}})
         if (message.sender_id == sender_id) {
-            await message.destroy()
+            message.text = "Message deleted ..."
+            await message.save()
             return res.json({message: "Message are deleted"})
         }
         return res.json({message: "You cant delete this message"})
@@ -63,10 +82,13 @@ const unsetMessage = async (req, res) => {
 
 const receivers = async (req, res) => {
     try {
-        const {id} = req.query
+        const {id,search} = req.query
+        if(search){
+            console.log(search)
+        }
         const myConversations = await Conversation.findAll({
             where: {
-                sender_id: id
+                    [Op.or]: [{ sender_id: id }, { receiver_id: id }],
             },
             include: [{
                 model: User,
@@ -77,6 +99,9 @@ const receivers = async (req, res) => {
                     ['seen', false]
                 ]
                 // include: [sequelize.fn('COUNT', sequelize.col('seen')), 'seen']
+            },{
+                model:User,
+                as:"Sender"
             }],
 
         })
@@ -100,24 +125,24 @@ const like = async (req, res) => {
     }
 }
 
-const unlike = async (req,res) => {
+const unlike = async (req, res) => {
     try {
-        const {message_id,user_id} = req.body
+        const {message_id, user_id} = req.body
         const message = await Message.findOne({where: {id: message_id}})
         if (message.receiver_id == user_id) {
             message.like = null
             await message.save()
             return res.json(message)
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
 const pinnedMessage = async (req, res) => {
     try {
-        const {sender_id, receiver_id, id} = req.body
-        const conversation = await Conversation.findOne({where: {sender_id, receiver_id}})
+        const {conversationId, id} = req.body
+        const conversation = await Conversation.findOne({where: {id:conversationId}})
         conversation.pinned_id = id
         await conversation.save()
         return res.json(conversation)
@@ -164,5 +189,6 @@ module.exports = {
     pinnedMessage,
     deletePinnedMessage,
     seen,
-    unlike
+    unlike,
+    deleteConversation
 }

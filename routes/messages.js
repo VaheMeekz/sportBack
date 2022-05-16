@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const messagesController = require("../controllers/messagesController")
+const messagesController = require("../controllers/messages.Controller")
 
 router.post('/',messagesController.createMessage)
 router.get('/',messagesController.receivers)
@@ -11,5 +11,5 @@ router.post('/unlike',messagesController.unlike)
 router.post('/pine',messagesController.pinnedMessage)
 router.post('/deletePine',messagesController.deletePinnedMessage)
 router.post('/seen',messagesController.seen)
-
+router.post('/deleteConversation',messagesController.deleteConversation)
 module.exports = router

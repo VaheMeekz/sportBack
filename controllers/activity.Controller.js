@@ -20,9 +20,12 @@ const getAll = async (req, res) => {
         const allActivity = await Activity.findAll({
             include: [{
                 model: ActivityPeople,
-                where: {
-                    status: "accept"
-                },
+                // where: {
+                //     status: "new"
+                // },
+                // status: {
+                //     [Op.or]: ["new", "accept"]
+                // },
                 include: [User]
             },{
                 model:User,

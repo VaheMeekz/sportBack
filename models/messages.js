@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     sender_id: DataTypes.INTEGER,
     receiver_id: DataTypes.INTEGER,
     conversation_id: DataTypes.INTEGER,
-    text: DataTypes.STRING,
+    text: DataTypes.STRING(1234),
     like: DataTypes.STRING,
     seen:DataTypes.BOOLEAN
   }, {

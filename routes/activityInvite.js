@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const activityInviteController = require("../controllers/activityInviteController")
+const activityInviteController = require("../controllers/activityInvite.Controller")
 router.post('/',activityInviteController.create)
 router.get('/',activityInviteController.getMySendedInvites)
 router.get('/my',activityInviteController.getMyInvites)

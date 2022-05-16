@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const inviteController = require("../controllers/teamInviteController")
+const inviteController = require("../controllers/teamInvite.Controller")
 router.post('/',inviteController.create)
 router.get('/myInvites',inviteController.myInvites)
 router.get('/my',inviteController.mySendedInvites)

@@ -27,6 +27,8 @@ module.exports = {
             token: Sequelize.STRING,
             userSport_id:Sequelize.INTEGER,
             team_id:Sequelize.INTEGER,
+            status:Sequelize.BOOLEAN,
+            socketId:Sequelize.STRING,
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
