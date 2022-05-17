@@ -180,6 +180,21 @@ const seen = async (req, res) => {
     }
 }
 
+const notifications = async (req,res) => {
+    try{
+        const {id}= req.query
+
+        const myMessages = await Message.findAll({where:{
+                receiver_id:id,
+                seen:false
+            }})
+
+        return res.json({count:myMessages.length,messages:myMessages})
+    }catch (e) {
+        console.log('somrthing went wrong',e)
+    }
+}
+
 module.exports = {
     createMessage,
     getMessages,
@@ -190,5 +205,6 @@ module.exports = {
     deletePinnedMessage,
     seen,
     unlike,
-    deleteConversation
+    deleteConversation,
+    notifications
 }

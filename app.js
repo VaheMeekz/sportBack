@@ -15,6 +15,7 @@ const activityController = require('./routes/activity')
 const activityInviteRouter = require('./routes/activityInvite')
 const messageRouter = require('./routes/messages')
 const userService = require("./services/status.service")
+const messageService = require("./services/message.service")
 const app = express();
 app.use(cors())
 
@@ -55,7 +56,6 @@ app.use(function (err, req, res, next) {
 //------------------------------------------------ sockets start -------------------------------------------------------
 
 let users = []
-console.log(users, "users");
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) && users.push({userId, socketId});
@@ -70,6 +70,10 @@ const removeUser = (socketId) => {
 const getUser = (userId) => {
     return users.filter((user) => user.userId === userId);
 };
+
+const seenMessage = (messagId) => {
+    messageService.seen(messagId)
+}
 
 const io = require("socket.io")(process.env.SOCKET_PORT, {
     cors: {
@@ -106,6 +110,14 @@ io.on("connection", (socket) => {
             senderId, senderImage, senderName, receiverId, text,
         });
     });
+
+    //message seen
+    socket.on("seen", ({messageId}) => {
+        const user = seenMessage(messageId)
+        user && io.emit("getSeen", {
+            messageId
+        })
+    })
 
     //disconnect
     socket.on("disconnect", () => {
