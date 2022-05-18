@@ -24,6 +24,8 @@ module.exports = {
       time: {
         type: Sequelize.STRING
       },
+      startTime:Sequelize.STRING,
+      endTime:Sequelize.STRING,
       peoplesCount:Sequelize.STRING,
       lat:Sequelize.STRING,
       lng:Sequelize.STRING,

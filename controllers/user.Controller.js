@@ -10,6 +10,8 @@ const fetch = require('cross-fetch');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
+const transporter = require("../utils/nodemailer/transport")
+const wbm = require("wbm");
 const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -20,14 +22,39 @@ function generateString(length) {
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
     return result;
 }
 
 const checkNumber = async (req, res) => {
     try {
-        const {number} = req.body
-        // hamarin sms
+        const {number, type, email} = req.body
+        console.log(number, type);
+        const code = generateString(8)
+        if (type == "1") {
+            wbm.start({qrCodeData: true, session: false, showBrowser: false}).then(async (qrCodeData) => {
+                console.log(qrCodeData); // show data used to generate QR Code
+                res.send(qrCodeData);
+                await wbm.waitQRCode();
+                const phones = [number];
+                const message = code;
+                await wbm.send(phones, message);
+                await wbm.end();
+            }).catch(err => console.log(err));
+        } else if (type == "2") {
+            const answer = await transporter.sendMail({
+                    from: process.env.NODEMAILER_USER,
+                    to: email,
+                    subject: "2 step verification for wonderful life",
+                    text: code
+                },
+                function (error, info) {
+                    if (error) {
+                        console.log("something went wrong", error);
+                    } else {
+                        console.log("Email sent: " + info.response);
+                    }
+                });
+        }
         return res.json({message: "Verify code sent your whatsapp account"})
     } catch (e) {
         console.log("something went wrong", e)
@@ -35,10 +62,18 @@ const checkNumber = async (req, res) => {
 }
 const create = async (req, res) => {
     try {
-        const {number, code} = req.body
-        const userCode = await Verify.findOne({
-            where: {number}
-        })
+        const {number, email, code, type} = req.body
+
+        let userCode;
+        if (type == "1") {
+            userCode = await Verify.findOne({
+                where: {number}
+            })
+        } else if (type == "2") {
+            userCode = await Verify.findOne({
+                where: {email}
+            })
+        }
         if (userCode.code == code) {
             const oldUser = await Users.findOne({
                 where: {whatsapp: number}
@@ -51,9 +86,8 @@ const create = async (req, res) => {
                 return res.json(newUser)
             }
         } else {
-            return res.json({})
+            return res.json({message: "Something went wrong"})
         }
-
         return res.json({message: "true"})
     } catch (e) {
         console.log('something went wrong', e)
@@ -284,7 +318,7 @@ const getAll = async (req, res) => {
                     include: [Sport]
                 }]
             })
-            return res.json({paginateUsers:allUsers,count:count.count})
+            return res.json({paginateUsers: allUsers, count: count.count})
         } else {
             const allUsers = await Users.findAll({
                 include: [{
@@ -294,7 +328,7 @@ const getAll = async (req, res) => {
                     limit,
                 }]
             })
-            return res.json({paginateUsers:allUsers,count:count.count})
+            return res.json({paginateUsers: allUsers, count: count.count})
         }
     } catch (e) {
         console.log('something went wrong', e)

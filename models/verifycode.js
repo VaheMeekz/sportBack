@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   VerifyCode.init({
     number: DataTypes.STRING,
+    email:DataTypes.STRING,
     code: DataTypes.STRING
   }, {
     sequelize,
