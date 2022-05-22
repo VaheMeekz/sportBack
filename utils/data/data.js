@@ -130,8 +130,14 @@ const usersSports = [
     }
 ]
 
+const verificationText = "Your verification code "
+
+const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 module.exports = {
     sports,
     users,
-    usersSports
+    usersSports,
+    verificationText,
+    characters
 }

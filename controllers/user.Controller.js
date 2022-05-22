@@ -10,10 +10,9 @@ const fetch = require('cross-fetch');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const transporter = require("../utils/nodemailer/transport")
-const wbm = require("wbm");
-const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const wbm = require("../utils/wbm");
+const text = require("../utils/data/data").verificationText
+const characters = require("../utils/data/data").characters
 
 
 function generateString(length) {
@@ -28,34 +27,42 @@ function generateString(length) {
 const checkNumber = async (req, res) => {
     try {
         const {number, type, email} = req.body
-        console.log(number, type);
+        console.log(email, "...")
         const code = generateString(8)
+        let testEmailAccount = await nodemailer.createTestAccount()
         if (type == "1") {
-            wbm.start({qrCodeData: true, session: false, showBrowser: false}).then(async (qrCodeData) => {
-                console.log(qrCodeData); // show data used to generate QR Code
-                res.send(qrCodeData);
-                await wbm.waitQRCode();
-                const phones = [number];
-                const message = code;
-                await wbm.send(phones, message);
-                await wbm.end();
-            }).catch(err => console.log(err));
+            wbm.start({qrCodeData: true, session: false, showBrowser: false})
+                .then(async qrCodeData => {
+                    res.send(qrCodeData);
+                    await wbm.waitQRCode();
+                    const phones = number;
+                    const message = code;
+                    await wbm.send(phones, message);
+                    await wbm.end();
+                }).catch(err => console.log(err, "eee"));
         } else if (type == "2") {
-            const answer = await transporter.sendMail({
-                    from: process.env.NODEMAILER_USER,
+            let transporter = await nodemailer.createTransport({
+                service:"gmail",
+                auth: {
+                    user: "vaheemkrtchyan@gmail.com",
+                    pass: "yaChasNeLondone",
+                },
+            })
+            await transporter.sendMail({
+                    from: "vaheemkrtchyan@gmail.com",
                     to: email,
-                    subject: "2 step verification for wonderful life",
-                    text: code
+                    subject: "Verification",
+                    text: `${text} ${code}`
                 },
                 function (error, info) {
                     if (error) {
                         console.log("something went wrong", error);
                     } else {
                         console.log("Email sent: " + info.response);
+                        return res.json({message: "Verification code sended in you email"})
                     }
                 });
         }
-        return res.json({message: "Verify code sent your whatsapp account"})
     } catch (e) {
         console.log("something went wrong", e)
     }
