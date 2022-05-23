@@ -40,9 +40,12 @@ const checkNumber = async (req, res) => {
                     await wbm.send(phones, message);
                     await wbm.end();
                 }).catch(err => console.log(err, "eee"));
+            await Verify.create({
+                email:"",code,number
+            })
         } else if (type == "2") {
             let transporter = await nodemailer.createTransport({
-                service:"gmail",
+                service: "gmail",
                 auth: {
                     user: "vaheemkrtchyan@gmail.com",
                     pass: "yaChasNeLondone",
@@ -62,6 +65,9 @@ const checkNumber = async (req, res) => {
                         return res.json({message: "Verification code sended in you email"})
                     }
                 });
+             await Verify.create({
+                 email,code,number:""
+             })
         }
     } catch (e) {
         console.log("something went wrong", e)
@@ -188,7 +194,7 @@ const edit = async (req, res) => {
             firstName,
             lastName,
             email,
-            skype,
+            gender,
             telegram,
             whatsapp,
             image,
@@ -199,7 +205,11 @@ const edit = async (req, res) => {
             instagram,
             linkedin,
             youtube,
-            password
+            birth,
+            city,
+            country,
+            state,
+            postalCode
         } = req.body
 
         const user = await Users.findOne({where: {id}})
@@ -207,7 +217,8 @@ const edit = async (req, res) => {
             user.firstName = firstName
             user.lastName = lastName
             user.email = email
-            user.skype = skype
+            user.birth = birth
+            user.gender = gender
             user.telegram = telegram
             user.whatsapp = whatsapp
             user.image = image
@@ -217,8 +228,11 @@ const edit = async (req, res) => {
             user.tiktok = tiktok
             user.instagram = instagram
             user.linkedin = linkedin
+            user.city = city
+            user.country = country
+            user.state = state
+            user.postalCode = postalCode
             user.youtube = youtube
-
             await user.save()
             return res.json(user)
         } else return res.json({message: "You cant change credentials"})
