@@ -2,64 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dadc7efd-e130-46e2-99c6-f149f49e12bb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userSports.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userSports.Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/03897f42f89e350e_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/2afa9f33a4f6deb3_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/3357a75d889f73e7_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/53a41e2e967188cb_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/5c1b81cfd43f703d_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/5ef1be8781ee0cea_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/613439dbb8b93c57_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/7969e688c1a6784f_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/7969e688c1a6784f_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/79fbbef57690f7bf_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/7f5ec8d09b92c79b_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/7f5ec8d09b92c79b_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/9d58295044cb02c5_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/9d58295044cb02c5_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/a034088ecd4af689_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/a034088ecd4af689_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/b9f29d5d2691b79d_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/bc01f15896c51bae_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/c28934e2346d5142_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/c28934e2346d5142_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/cd1af2464cc84dae_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/cd1af2464cc84dae_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/f8db78367e19601e_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cache/index-dir/the-real-index" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cache/index-dir/the-real-index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/1314baaf68443f2d_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/2473284dbc525c38_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/70939597ad2aa244_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/835cfb3b07ccaf3c_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/835cfb3b07ccaf3c_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/b0ffda7181b48f37_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/d05ed8aa441180b5_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/dccd48e1bc5dc891_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/dccd48e1bc5dc891_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/f0d995d3628fd879_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/index-dir/the-real-index" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Code Cache/js/index-dir/the-real-index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Cookies" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Cookies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/File System/000/t/Paths/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/File System/000/t/Paths/LOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/File System/Origins/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/File System/Origins/LOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/GPUCache/data_1" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/GPUCache/data_1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/GPUCache/index" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/GPUCache/index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000003.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/LOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Local Storage/leveldb/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Local Storage/leveldb/000003.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Local Storage/leveldb/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Local Storage/leveldb/LOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/QuotaManager" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/QuotaManager" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/3bf24a4c-2efd-4dfd-95a5-29e0299e77df/7f5ec8d09b92c79b_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/3bf24a4c-2efd-4dfd-95a5-29e0299e77df/index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/3bf24a4c-2efd-4dfd-95a5-29e0299e77df/index-dir/the-real-index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/65611b7e-3927-4c3b-b56a-0a163086d023/index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/65611b7e-3927-4c3b-b56a-0a163086d023/index-dir/the-real-index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/91c7cfd4-3452-4001-b415-78facb3941f7/index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/91c7cfd4-3452-4001-b415-78facb3941f7/index-dir/the-real-index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/9cca35a1-1550-40ae-8fa4-87692f4905bc/9d58295044cb02c5_0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/9cca35a1-1550-40ae-8fa4-87692f4905bc/index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/9cca35a1-1550-40ae-8fa4-87692f4905bc/index-dir/the-real-index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/Database/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/Database/000003.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/Database/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/Database/LOG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_0" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_1" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/index-dir/the-real-index" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Service Worker/ScriptCache/index-dir/the-real-index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Session Storage/000003.log" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Session Storage/000003.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tmp/Default/Session Storage/LOG" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tmp/Default/Session Storage/LOG" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +29,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fantasticLifeFront" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -106,7 +49,7 @@
       <workItem from="1652354661318" duration="167000" />
       <workItem from="1652431919830" duration="606000" />
       <workItem from="1653205336447" duration="5526000" />
-      <workItem from="1653282210265" duration="6855000" />
+      <workItem from="1653282210265" duration="13831000" />
     </task>
     <servers />
   </component>

@@ -112,7 +112,7 @@ const loginCredentials = async (req, res) => {
         const {id, email, password} = req.body
         const user = await Users.findOne({where: {id}})
         let encryptedPassword = await bcrypt.hash(password, 10);
-        user.email = email
+        user.email = email.toLowerCase()
         user.password = encryptedPassword
         await user.save()
         return res.json({answer: "true"})
@@ -144,7 +144,7 @@ const login = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({
+        const user = await Users.findOne({
             where: {email: email.toLowerCase()},
         });
 
@@ -195,11 +195,11 @@ const edit = async (req, res) => {
             lastName,
             email,
             gender,
-            telegram,
-            whatsapp,
             image,
             address1,
             address2,
+            telegram,
+            whatsapp,
             facebook,
             tiktok,
             instagram,
@@ -211,6 +211,17 @@ const edit = async (req, res) => {
             state,
             postalCode
         } = req.body
+        address1: "Vaheasdasd"
+        address2: "Vaheasdasd"
+        birth: "asdasd"
+        city: "asdasd"
+        country: "asdasdasd"
+        email: "Vahe@mail.com"
+        firstName: "Vaheqweqe"
+        gender: "2"
+        lastName: "aaasdVahe"
+        postalCode: "asdasdasd"
+        state: "asdasd"
 
         const user = await Users.findOne({where: {id}})
         if (user) {
