@@ -211,17 +211,6 @@ const edit = async (req, res) => {
             state,
             postalCode
         } = req.body
-        address1: "Vaheasdasd"
-        address2: "Vaheasdasd"
-        birth: "asdasd"
-        city: "asdasd"
-        country: "asdasdasd"
-        email: "Vahe@mail.com"
-        firstName: "Vaheqweqe"
-        gender: "2"
-        lastName: "aaasdVahe"
-        postalCode: "asdasdasd"
-        state: "asdasd"
 
         const user = await Users.findOne({where: {id}})
         if (user) {
@@ -246,7 +235,7 @@ const edit = async (req, res) => {
             user.youtube = youtube
             await user.save()
             return res.json(user)
-        } else return res.json({message: "You cant change credentials"})
+        } else return res.json({err: "You cant change credentials"})
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -425,10 +414,35 @@ const info = async (req, res) => {
             return res.json(res)
         })
         .catch(function (res) {
-            console.log(res, "+++++++++++++++++++++++++++++++");
         });
 
     // return res.json(results.wlp3s0)
+}
+
+const changePassword = async (req,res) => {
+    try{
+        const {oldPassword,newPassword,id} = req.body
+        const user = await Users.findOne({
+            where:{id}
+        })
+        if(user){
+                let encryptedPassword = await bcrypt.hash(oldPassword, 10);
+                if (user.password == encryptedPassword){
+                    const password = await bcrypt.hash(newPassword,10)
+                    if(user.password = password){
+                        return res.json({message:"This password You use alredy!"})
+                    }else {
+                        user.password = password
+                        await user.save
+                    }
+                    return res.json({message:"password is changed!"})
+                }else {
+                    return res.json({message:"Password is not much!"})
+                }
+        }
+    }catch (e) {
+        console.log('something went wrong', e)
+    }
 }
 
 module.exports = {
@@ -446,5 +460,6 @@ module.exports = {
     deactivateAccount,
     conformPasswordAddCode,
     checkVerifyCode,
-    newPassword
+    newPassword,
+    changePassword
 }
