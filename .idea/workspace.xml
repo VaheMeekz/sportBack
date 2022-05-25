@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="dadc7efd-e130-46e2-99c6-f149f49e12bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/activity.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/activity.Controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/user.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/20220510144830-create-activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20220510144830-create-activity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/activity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/sports.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/sports.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/activity.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +57,9 @@
       <workItem from="1652431919830" duration="606000" />
       <workItem from="1653205336447" duration="5526000" />
       <workItem from="1653282210265" duration="13831000" />
-      <workItem from="1653370218367" duration="8800000" />
+      <workItem from="1653370218367" duration="11455000" />
+      <workItem from="1653390503423" duration="8306000" />
+      <workItem from="1653456366814" duration="5259000" />
     </task>
     <servers />
   </component>

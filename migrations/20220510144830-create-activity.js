@@ -29,6 +29,7 @@ module.exports = {
       peoplesCount:Sequelize.STRING,
       lat:Sequelize.STRING,
       lng:Sequelize.STRING,
+      visible:Sequelize.BOOLEAN,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

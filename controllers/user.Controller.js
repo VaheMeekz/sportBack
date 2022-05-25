@@ -241,6 +241,21 @@ const edit = async (req, res) => {
     }
 }
 
+const changeAvatar = async (req,res) => {
+    try{
+        const {id,image} = req.body
+        console.log(id,image,"...............")
+        const user = await Users.findOne({
+            where:{id}
+        })
+        user.image = image
+        await  user.save()
+        return res.json(user)
+    }catch (e) {
+        console.log('something went wrong', e)
+    }
+}
+
 const conformPasswordAddCode = async (req, res) => {
     const {email} = req.body;
 
@@ -461,5 +476,6 @@ module.exports = {
     conformPasswordAddCode,
     checkVerifyCode,
     newPassword,
-    changePassword
+    changePassword,
+    changeAvatar
 }

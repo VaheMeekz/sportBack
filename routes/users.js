@@ -16,6 +16,7 @@ router.post('/logout',userController.logout)
 //edit user
 router.post('/edit',userController.edit)
 router.post('/changePassword',userController.changePassword)
+router.post('/changeAvatar',userController.changeAvatar)
 //all users
 router.get('/',userController.getAll)
 //single user

@@ -29,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   Sports.hasOne(Team, {
     foreignKey: "sport_id",
   });
-  Sports.hasOne(Activity,{
-    foreignKey:"sport_id"
+  Sports.belongsTo(Activity,{
+    foreignKey:"id"
   })
   return Sports;
 };

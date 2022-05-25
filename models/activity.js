@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         peoplesCount: DataTypes.STRING,
         lat: DataTypes.STRING,
         lng: DataTypes.STRING,
+        visible:DataTypes.BOOLEAN,
     }, {
         sequelize,
         modelName: 'Activity',
@@ -42,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "creator_id",
         as: "Creator"
     })
-    Activity.hasOne(Sport, {
-        foreignKey: "id"
+    Activity.belongsTo(Sport, {
+        foreignKey: "sport_id"
     })
     Activity.hasMany(ActivityInvite, {
         foreignKey: "id"
