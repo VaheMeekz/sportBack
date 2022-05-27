@@ -1,7 +1,7 @@
 const Activity = require('../models').Activity
 const ActivityPeople = require('../models').ActivityPeople
 const User = require("../models").User
-const ActivityInvites = require("../models").ActivityInvite
+// const ActivityInvites = require("../models").ActivityInvite
 const Sport = require("../models").Sports
 
 const create = async (req, res) => {
@@ -18,10 +18,25 @@ const create = async (req, res) => {
 
         } = req.body
         let timeout = Number(endTime) - Number(startTime)
-        const newActivity = await Activity.create({
+         await Activity.create({
             creator_id, name, description, sport_id, date, time: timeout, peoplesCount, startTime, endTime
         })
-        return res.json(newActivity)
+        const allActivity = await Activity.findAll({
+            where: {creator_id},
+            include: [{
+                model: ActivityPeople,
+                // where: {
+                //     status: "accept"
+                // },
+                include: [User]
+            }, {
+                model: User,
+                as: "Creator"
+            },{
+                model:Sport
+            }]
+        })
+        return res.json(allActivity)
     } catch (e) {
         console.log('something went wrong', e)
     }

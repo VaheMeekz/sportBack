@@ -13,7 +13,11 @@ const create = async (req, res) => {
             user_id: creator_id,
             team_id: newTeam.id
         })
-        return res.json(newTeam)
+        const userTeams = await Team.findAll({
+            where: {creator_id: creator_id},
+            include: [{model: UserTeam, include: [User]}, Sport]
+        })
+        return res.json(userTeams)
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -41,7 +45,11 @@ const deleteTeam = async (req, res) => {
         if (team.creator_id == creatorId) {
             const usersTeam = await UserTeam.destroy({where: {team_id: team.id}})
             await team.destroy()
-            return res.json({message: "Your team is deleted"})
+            const userTeams = await Team.findAll({
+                where: {creator_id: creatorId},
+                include: [{model: UserTeam, include: [User]}, Sport]
+            })
+            return res.json(userTeams)
         } else {
             return res.json({message: 'You cant delete this team'})
         }
@@ -66,6 +74,21 @@ const deleteTeamMete = async (req, res) => {
             })
             return res.json(team)
         }
+    } catch (e) {
+        console.log('something went wrong', e)
+    }
+}
+
+const myTeams = async (req, res) => {
+    try {
+        const {id} = req.query
+
+        const userTeams = await Team.findAll({
+            where: {creator_id: id},
+            include: [{model: UserTeam, include: [User]}, Sport]
+        })
+
+        return res.json(userTeams)
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -100,5 +123,6 @@ module.exports = {
     getSingle,
     getAll,
     editTeam,
-    deleteTeamMete
+    deleteTeamMete,
+    myTeams
 }
