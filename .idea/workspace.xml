@@ -3,9 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="dadc7efd-e130-46e2-99c6-f149f49e12bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/activity.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/activity.Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/team.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/team.Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/team.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/activityInvite.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/activityInvite.Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/teamInvite.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/teamInvite.Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/team.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/teaminvites.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/teaminvites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/teamInvites.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/teamInvites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/data/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/data/data.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +37,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../new/fantasticLifeFront" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -58,7 +63,8 @@
       <workItem from="1653456366814" duration="12726000" />
       <workItem from="1653575181603" duration="21000" />
       <workItem from="1653575205928" duration="1351000" />
-      <workItem from="1653629647877" duration="357000" />
+      <workItem from="1653629647877" duration="16430000" />
+      <workItem from="1653719580440" duration="14469000" />
     </task>
     <servers />
   </component>

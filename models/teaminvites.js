@@ -24,8 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'TeamInvites',
   });
   let Team = sequelize.define("Team")
+  let User = sequelize.define("User")
   TeamInvites.belongsTo(Team, {
-    foreignKey:"id",
+    foreignKey:"team_id",
+  })
+  TeamInvites.belongsTo(User,{
+    foreignKey:"receiver_id"
   })
   return TeamInvites;
 };

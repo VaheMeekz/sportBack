@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
   Team.hasMany(UserTeam, {
     foreignKey:"team_id",
   })
-  Team.hasMany(Invite, {
-    foreignKey:"team_id",
+  Team.belongsTo(Invite, {
+    foreignKey:"id",
   })
   return Team;
 };

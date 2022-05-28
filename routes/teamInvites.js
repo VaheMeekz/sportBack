@@ -6,4 +6,5 @@ router.get('/myInvites',inviteController.myInvites)
 router.get('/my',inviteController.mySendedInvites)
 router.post('/accept',inviteController.accept)
 router.post('/reject',inviteController.reject)
+router.post('/withEmail',inviteController.inviteWithEmail)
 module.exports = router

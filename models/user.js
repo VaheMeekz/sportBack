@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
   let ActivityPeople = sequelize.define("ActivityPeople");
   let Activity = sequelize.define("Activity")
   let Conversation = sequelize.define("Conversation")
+  let TeamInvites = sequelize.define("TeamInvites")
   User.hasMany(UserSport, {
     foreignKey: "id",
   });
@@ -62,7 +63,9 @@ module.exports = (sequelize, DataTypes) => {
     foreignKey:"id"
   })
 
-
+  User.belongsTo(TeamInvites,{
+    foreignKey:"id"
+  })
   User.belongsTo(Conversation,{
     foreignKey:"id"
   })

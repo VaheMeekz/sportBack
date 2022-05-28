@@ -13,7 +13,7 @@ const nodemailer = require("nodemailer");
 const wbm = require("../utils/wbm");
 const text = require("../utils/data/data").verificationText
 const characters = require("../utils/data/data").characters
-
+const {Op} = require('sequelize');
 
 function generateString(length) {
     let result = "";
@@ -41,7 +41,7 @@ const checkNumber = async (req, res) => {
                     await wbm.end();
                 }).catch(err => console.log(err, "eee"));
             await Verify.create({
-                email:"",code,number
+                email: "", code, number
             })
         } else if (type == "2") {
             let transporter = await nodemailer.createTransport({
@@ -65,9 +65,9 @@ const checkNumber = async (req, res) => {
                         return res.json({message: "Verification code sended in you email"})
                     }
                 });
-             await Verify.create({
-                 email,code,number:""
-             })
+            await Verify.create({
+                email, code, number: ""
+            })
         }
     } catch (e) {
         console.log("something went wrong", e)
@@ -214,7 +214,7 @@ const edit = async (req, res) => {
 
         const user = await Users.findOne({where: {id}})
         if (user) {
-            user.firstName = firstName
+            user.firstName = firstName.toLowerCase()
             user.lastName = lastName
             user.email = email
             user.birth = birth
@@ -241,17 +241,17 @@ const edit = async (req, res) => {
     }
 }
 
-const changeAvatar = async (req,res) => {
-    try{
-        const {id,image} = req.body
-        console.log(id,image,"...............")
+const changeAvatar = async (req, res) => {
+    try {
+        const {id, image} = req.body
+        console.log(id, image, "...............")
         const user = await Users.findOne({
-            where:{id}
+            where: {id}
         })
         user.image = image
-        await  user.save()
+        await user.save()
         return res.json(user)
-    }catch (e) {
+    } catch (e) {
         console.log('something went wrong', e)
     }
 }
@@ -339,33 +339,48 @@ const newPassword = async (req, res) => {
 }
 
 const getAll = async (req, res) => {
-    const {status} = req.query
+    const {status, search} = req.query
     const offset = Number.parseInt(req.query.offset) || 0;
     const limit = Number.parseInt(req.query.limit) || 6;
     const count = await Users.findAll()
-    try {
-        if (status) {
-            const allUsers = await Users.findAll({
-                where: {status},
-                offset: offset * limit,
-                limit,
-                include: [{
-                    model: UserSports,
-                    include: [Sport]
-                }]
-            })
-            return res.json({paginateUsers: allUsers, count: count.count})
-        } else {
-            const allUsers = await Users.findAll({
-                include: [{
-                    model: UserSports,
-                    include: [Sport],
-                    offset: offset * limit,
-                    limit,
-                }]
-            })
-            return res.json({paginateUsers: allUsers, count: count.count})
+    console.log(search, "++++++")
+    let queryObj = {}
+    if (search) {
+        queryObj["firstName"] = {
+            [Op.like]: '%' + String(search) + '%'
         }
+    }
+    if (status) {
+        queryObj["status"] = {
+            [Op.eq]: status
+        }
+    }
+    console.log(queryObj, "[][][][][][][][][][][][")
+    try {
+        // if (status) {
+        const allUsers = await Users.findAll({
+            where: {
+                ...queryObj
+            },
+            offset: offset * limit,
+            limit,
+            include: [{
+                model: UserSports,
+                include: [Sport]
+            }]
+        })
+        return res.json({paginateUsers: allUsers, count: count.length})
+        // } else {
+        //     const allUsers = await Users.findAll({
+        //         include: [{
+        //             model: UserSports,
+        //             include: [Sport],
+        //             offset: offset * limit,
+        //             limit,
+        //         }]
+        //     })
+        //     return res.json({paginateUsers: allUsers, count: count.length})
+        // }
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -434,28 +449,28 @@ const info = async (req, res) => {
     // return res.json(results.wlp3s0)
 }
 
-const changePassword = async (req,res) => {
-    try{
-        const {oldPassword,newPassword,id} = req.body
+const changePassword = async (req, res) => {
+    try {
+        const {oldPassword, newPassword, id} = req.body
         const user = await Users.findOne({
-            where:{id}
+            where: {id}
         })
-        if(user){
-                let encryptedPassword = await bcrypt.hash(oldPassword, 10);
-                if (user.password == encryptedPassword){
-                    const password = await bcrypt.hash(newPassword,10)
-                    if(user.password = password){
-                        return res.json({message:"This password You use alredy!"})
-                    }else {
-                        user.password = password
-                        await user.save
-                    }
-                    return res.json({message:"password is changed!"})
-                }else {
-                    return res.json({message:"Password is not much!"})
+        if (user) {
+            let encryptedPassword = await bcrypt.hash(oldPassword, 10);
+            if (user.password == encryptedPassword) {
+                const password = await bcrypt.hash(newPassword, 10)
+                if (user.password = password) {
+                    return res.json({message: "This password You use alredy!"})
+                } else {
+                    user.password = password
+                    await user.save
                 }
+                return res.json({message: "password is changed!"})
+            } else {
+                return res.json({message: "Password is not much!"})
+            }
         }
-    }catch (e) {
+    } catch (e) {
         console.log('something went wrong', e)
     }
 }

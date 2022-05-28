@@ -115,6 +115,9 @@ const myInvitesHistory = async (req,res) => {
         const rejected = await ActivityInvites.findAll({
             where:{sender_id:id,status:"reject"}
         })
+        const pending = await ActivityInvites.findAll({
+            where:{sender_id:id,status:"new"}
+        })
 
         return res.json({all:all.length,accept:accepted.length,reject:rejected.length})
     }catch (e) {
