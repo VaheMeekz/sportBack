@@ -113,8 +113,10 @@ const getSingle = async (req, res) => {
 const myActivityTime = async (req, res) => {
     try {
         const {id} = req.query
-        const allActivity = await Activity.findAll({
-            where: {creator_id: id},
+        const myCreatedActivity = await Activity.findAll({
+            where: {
+                creator_id: id
+            },
             include: [{
                 model: ActivityPeople,
                 // where: {
@@ -128,7 +130,32 @@ const myActivityTime = async (req, res) => {
                 model: Sport
             }]
         })
-        return res.json(allActivity)
+        const myActivity = await Activity.findAll({
+            include: [{
+                model: ActivityPeople,
+                include: {
+                    model: User,
+                    where: {
+                        id
+                    },
+                }
+            }, {
+                model: User,
+                as: "Creator",
+            }, {
+                model: Sport
+            }]
+        })
+        let myHour = 0;
+        let hours = 0;
+        for (let i = 0; i < myActivity.length; i++) {
+            myHour = Number(myHour) + Number(myActivity[i].time)
+        }
+        for (let i = 0; i < myCreatedActivity.length; i++) {
+            hours = Number(hours) + Number(myCreatedActivity[i].time)
+        }
+        let all = await Number(hours) + await Number(myHour)
+        return res.json(all)
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -159,7 +186,7 @@ const myActivity = async (req, res) => {
             include: [{
                 model: ActivityPeople,
                 include: {
-                    model:User,
+                    model: User,
                     where: {
                         id
                     },
@@ -171,7 +198,7 @@ const myActivity = async (req, res) => {
                 model: Sport
             }]
         })
-        return res.json({myActivity,myCreatedActivity})
+        return res.json({myActivity, myCreatedActivity})
     } catch (e) {
         console.log('something went wrong', e)
     }

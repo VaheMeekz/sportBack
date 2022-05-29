@@ -4,10 +4,7 @@
     <list default="true" id="dadc7efd-e130-46e2-99c6-f149f49e12bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/activity.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/activity.Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/activityInvite.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/activityInvite.Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/activityinvite.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/activityinvite.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/activity.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/activity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/status.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/status.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +59,7 @@
       <workItem from="1653575205928" duration="1351000" />
       <workItem from="1653629647877" duration="16430000" />
       <workItem from="1653719580440" duration="15171000" />
-      <workItem from="1653804474035" duration="15001000" />
+      <workItem from="1653804474035" duration="20211000" />
     </task>
     <servers />
   </component>
