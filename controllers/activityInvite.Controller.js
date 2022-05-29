@@ -5,30 +5,34 @@ const User = require("../models").User
 const ActivityInvites = require("../models").ActivityInvite
 const Sport = require("../models").Sports
 const create = async (req, res) => {
+    console.log("8979799999999999999999999999999999999999999999999999999999")
     try {
         const {activity_id, sender_id, message, recivier_id} = req.body
-        const recivers = recivier_id.split(",")
+        console.log(recivier_id, "iddddddddddd")
+        const recivers = recivier_id
+        console.log(recivers, "alllllllllllll")
+        console.log("activity_id, sender_id, message, recivier_id")
         recivers.forEach(async i => {
             await ActivityPeople.create({
                 activity_id: activity_id,
                 user_id: i,
-                status:"new"
+                status: "new"
             })
         })
-        recivers.forEach(async i=>{
+        recivers.forEach(async i => {
             await ActivityInvites.create(
                 {
                     sender_id,
                     activity_id,
                     message,
                     recivier_id: i,
-                    status:"new"
+                    status: "new"
                 }
             )
         })
         return res.json({message: "invites are sended"})
     } catch (e) {
-
+        console.log('something went wrong', e)
     }
 }
 
@@ -36,10 +40,14 @@ const getMyInvites = async (req, res) => {
     try {
         const {id} = req.query
         const myActivitys = await ActivityInvites.findAll({
-            where: {recivier_id: id},
+            where: {recivier_id: id, status: "new"},
             include: [{
                 model: Activity,
-                include: [Sport]}]
+                include: [Sport, {
+                    model: User,
+                    as: "Creator"
+                }]
+            }]
         })
         return res.json(myActivitys)
     } catch (e) {
@@ -51,96 +59,105 @@ const getMySendedInvites = async (req, res) => {
     try {
         const {id} = req.query
         const myActivitys = await ActivityInvites.findAll({
-            where: {sender_id: id}
-        })
+            where: {sender_id: id, status: "new"},
+            include: [
+                {
+                    model: Activity,
 
+                },
+                {
+                    model: User,
+                    as: "Receiver"
+                }
+            ]
+        })
         return res.json(myActivitys)
     } catch (e) {
         console.log('something went wrong', e)
     }
 }
 
-const accept = async (req,res) => {
+const accept = async (req, res) => {
     try {
-        const {sender_id,activity_id,recivier_id} = req.body
+        const {sender_id, activity_id, recivier_id} = req.body
         const activity = await ActivityInvites.findOne({
-            where:{sender_id,activity_id,recivier_id}
+            where: {sender_id, activity_id, recivier_id}
         })
 
         const activPeople = await ActivityPeople.findOne({
-            where:{activity_id,user_id:recivier_id}
+            where: {activity_id, user_id: recivier_id}
         })
-        if(activity && activPeople){
+        if (activity && activPeople) {
             activity.status = "accept"
             activPeople.status = "accept"
             await activPeople.save()
             await activity.save()
             return res.json(activity)
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
-const reject = async (req,res) => {
+const reject = async (req, res) => {
     try {
-        const {sender_id,activity_id,recivier_id} = req.body
+        const {sender_id, activity_id, recivier_id} = req.body
         const activity = await ActivityInvites.findOne({
-            where:{sender_id,activity_id,recivier_id}
+            where: {sender_id, activity_id, recivier_id}
         })
         const activPeople = await ActivityPeople.findOne({
-            where:{activity_id,user_id:recivier_id}
+            where: {activity_id, user_id: recivier_id}
         })
-        if(activity && activPeople){
+        if (activity && activPeople) {
             activity.status = "reject"
             activPeople.status = "reject"
             await activity.save()
             await activPeople.save()
             return res.json(activity)
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
-const myInvitesHistory = async (req,res) => {
-    try{
+const myInvitesHistory = async (req, res) => {
+    try {
         const {id} = req.query
-        const all =await ActivityInvites.findAll({
-            where:{sender_id:id}
+        const all = await ActivityInvites.findAll({
+            where: {sender_id: id}
         })
         const accepted = await ActivityInvites.findAll({
-            where:{sender_id:id,status:"accept"}
+            where: {sender_id: id, status: "accept"}
         })
         const rejected = await ActivityInvites.findAll({
-            where:{sender_id:id,status:"reject"}
+            where: {sender_id: id, status: "reject"}
         })
         const pending = await ActivityInvites.findAll({
-            where:{sender_id:id,status:"new"}
+            where: {sender_id: id, status: "new"}
         })
 
-        return res.json({all:all.length,accept:accepted.length,reject:rejected.length})
-    }catch (e) {
-        console.log('something went wrong',e)
+        return res.json({all: all.length, accept: accepted.length, reject: rejected.length,pending:pending})
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
 // router.get('/singleActivityHistory')
-const singleHistory = async (req,res) => {
-    try{
-        const  {id,activity_id} = req.query
-        const all =await ActivityInvites.findAll({
-            where:{sender_id:id,activity_id}
+const singleHistory = async (req, res) => {
+    try {
+        const {id, activity_id} = req.query
+        const all = await ActivityInvites.findAll({
+            where: {sender_id: id, activity_id}
         })
         const accepted = await ActivityInvites.findAll({
-            where:{sender_id:id,status:"accept",activity_id}
+            where: {sender_id: id, status: "accept", activity_id}
         })
         const rejected = await ActivityInvites.findAll({
-            where:{sender_id:id,status:"reject",activity_id}
+            where: {sender_id: id, status: "reject", activity_id}
         })
-        return res.json({all:all.length,accept:accepted.length,reject:rejected.length})
-    }catch (e) {
-        console.log('something went wrong',e)
+        return res.json({all: all.length, accept: accepted.length, reject: rejected.length})
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 

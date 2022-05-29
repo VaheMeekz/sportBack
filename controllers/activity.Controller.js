@@ -18,7 +18,7 @@ const create = async (req, res) => {
 
         } = req.body
         let timeout = Number(endTime) - Number(startTime)
-         await Activity.create({
+        await Activity.create({
             creator_id, name, description, sport_id, date, time: timeout, peoplesCount, startTime, endTime
         })
         const allActivity = await Activity.findAll({
@@ -32,8 +32,8 @@ const create = async (req, res) => {
             }, {
                 model: User,
                 as: "Creator"
-            },{
-                model:Sport
+            }, {
+                model: Sport
             }]
         })
         return res.json(allActivity)
@@ -124,8 +124,8 @@ const myActivityTime = async (req, res) => {
             }, {
                 model: User,
                 as: "Creator"
-            },{
-                model:Sport
+            }, {
+                model: Sport
             }]
         })
         return res.json(allActivity)
@@ -134,10 +134,53 @@ const myActivityTime = async (req, res) => {
     }
 }
 
+const myActivity = async (req, res) => {
+    try {
+        const {id} = req.query
+
+        const myCreatedActivity = await Activity.findAll({
+            where: {
+                creator_id: id
+            },
+            include: [{
+                model: ActivityPeople,
+                // where: {
+                //     status: "accept"
+                // },
+                include: [User]
+            }, {
+                model: User,
+                as: "Creator"
+            }, {
+                model: Sport
+            }]
+        })
+        const myActivity = await Activity.findAll({
+            include: [{
+                model: ActivityPeople,
+                include: {
+                    model:User,
+                    where: {
+                        id
+                    },
+                }
+            }, {
+                model: User,
+                as: "Creator",
+            }, {
+                model: Sport
+            }]
+        })
+        return res.json({myActivity,myCreatedActivity})
+    } catch (e) {
+        console.log('something went wrong', e)
+    }
+}
 module.exports = {
     create,
     getAll,
     getSingle,
+    myActivity,
     myActivityTime,
     addOtherCredentials
 }

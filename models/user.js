@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   let Activity = sequelize.define("Activity")
   let Conversation = sequelize.define("Conversation")
   let TeamInvites = sequelize.define("TeamInvites")
+  let ActivityInvite = sequelize.define("ActivityInvite")
   User.hasMany(UserSport, {
     foreignKey: "id",
   });
@@ -67,6 +68,10 @@ module.exports = (sequelize, DataTypes) => {
     foreignKey:"id"
   })
   User.belongsTo(Conversation,{
+    foreignKey:"id"
+  })
+
+  User.belongsTo(ActivityInvite,{
     foreignKey:"id"
   })
   return User;

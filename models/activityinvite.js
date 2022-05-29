@@ -24,9 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'ActivityInvite',
   });
   let Activity = sequelize.define("Activity")
-
+  let User = sequelize.define("User")
   ActivityInvite.belongsTo(Activity,{
     foreignKey:"activity_id"
+  })
+
+  ActivityInvite.belongsTo(User,{
+    foreignKey:"recivier_id",
+    as:"Receiver"
   })
   return ActivityInvite;
 };
