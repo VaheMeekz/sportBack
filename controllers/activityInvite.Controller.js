@@ -155,7 +155,10 @@ const singleHistory = async (req, res) => {
         const rejected = await ActivityInvites.findAll({
             where: {sender_id: id, status: "reject", activity_id}
         })
-        return res.json({all: all.length, accept: accepted.length, reject: rejected.length})
+        const pending = await ActivityInvites.findAll({
+            where: {sender_id: id, status: "new", activity_id}
+        })
+        return res.json({all: all.length, accept: accepted.length, reject: rejected.length,pending:pending.length})
     } catch (e) {
         console.log('something went wrong', e)
     }
