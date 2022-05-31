@@ -109,14 +109,21 @@ const create = async (req, res) => {
 const loginCredentials = async (req, res) => {
     try {
         const {id, email, password} = req.body
-        const user = await Users.findOne({where: {id}})
-        let encryptedPassword = await bcrypt.hash(password, 10);
-        user.email = email.toLowerCase()
-        user.password = encryptedPassword
-        await user.save()
-        return res.json({answer: "true"})
+        const candidate = await Users.findOne({
+            where:{email}
+        })
+        if(!candidate) {
+            const user = await Users.findOne({where: {id}})
+            let encryptedPassword = await bcrypt.hash(password, 10);
+            user.email = email.toLowerCase()
+            user.password = encryptedPassword
+            await user.save()
+            return res.json({answer: "true"})
+        }else {
+            return res.json({error:"user whit this email already exist!"})
+        }
     } catch (e) {
-        console.log('something went wrog', e)
+        console.log('something went wrong', e)
     }
 }
 

@@ -2,7 +2,6 @@ const User = require("../models").User
 
 const setOnline = async (id, socketId) => {
     try {
-        console.log(id,"++++++++++++++++++++++++++")
         const user = await User.findOne({where: {id}})
         user.status = true
         user.socketId = socketId
