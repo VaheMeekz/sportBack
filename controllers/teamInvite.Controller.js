@@ -8,7 +8,6 @@ const User = require("../models").User
 const create = async (req, res) => {
     try {
         const {team_id, receiver_id, message, sender_id} = req.body
-        console.log(team_id, receiver_id, message, sender_id);
 
         const newInvite = await Invite.create({
             team_id,
@@ -76,12 +75,14 @@ const accept = async (req, res) => {
             user_id: id,
             team_id: teamId
         })
-        // await Invite.destroy({
-        //     where: {
-        //         team_id: teamId,
-        //         receiver_id: id,
-        //     }
-        // })
+       const invite =  await Invite.findOne({
+            where: {
+                team_id: teamId,
+                receiver_id: id,
+            }
+        })
+        invite.status = "accept"
+        await invite.save()
         return res.json(newUserTeam)
     } catch (e) {
         console.log('something went wrong', e)

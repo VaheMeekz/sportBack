@@ -84,8 +84,7 @@ const receivers = async (req, res) => {
     try {
         const {id,search} = req.query
         if(search){
-            console.log(search)
-        }
+          }
         const myConversations = await Conversation.findAll({
             where: {
                     [Op.or]: [{ sender_id: id }, { receiver_id: id }],

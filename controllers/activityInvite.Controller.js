@@ -5,13 +5,9 @@ const User = require("../models").User
 const ActivityInvites = require("../models").ActivityInvite
 const Sport = require("../models").Sports
 const create = async (req, res) => {
-    console.log("8979799999999999999999999999999999999999999999999999999999")
     try {
         const {activity_id, sender_id, message, recivier_id} = req.body
-        console.log(recivier_id, "iddddddddddd")
         const recivers = recivier_id
-        console.log(recivers, "alllllllllllll")
-        console.log("activity_id, sender_id, message, recivier_id")
         recivers.forEach(async i => {
             await ActivityPeople.create({
                 activity_id: activity_id,

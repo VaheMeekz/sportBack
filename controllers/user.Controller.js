@@ -26,6 +26,7 @@ function generateString(length) {
 
 const checkNumber = async (req, res) => {
     try {
+        console.log("421346125485124585123546312546312451235456")
         const {number, type, email} = req.body
         const code = generateString(8)
         let testEmailAccount = await nodemailer.createTestAccount()
@@ -98,9 +99,9 @@ const create = async (req, res) => {
                 return res.json(newUser)
             }
         } else {
-            return res.json({message: "Something went wrong"})
+            // return res.json({message: "Something went wrong"})
+            return res.json({message: "true"})
         }
-        return res.json({message: "true"})
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -110,17 +111,17 @@ const loginCredentials = async (req, res) => {
     try {
         const {id, email, password} = req.body
         const candidate = await Users.findOne({
-            where:{email}
+            where: {email}
         })
-        if(!candidate) {
+        if (!candidate) {
             const user = await Users.findOne({where: {id}})
             let encryptedPassword = await bcrypt.hash(password, 10);
             user.email = email.toLowerCase()
             user.password = encryptedPassword
             await user.save()
             return res.json({answer: "true"})
-        }else {
-            return res.json({error:"user whit this email already exist!"})
+        } else {
+            return res.json({error: "user whit this email already exist!"})
         }
     } catch (e) {
         console.log('something went wrong', e)
@@ -218,31 +219,68 @@ const edit = async (req, res) => {
             postalCode
         } = req.body
 
-        const user = await Users.findOne({where: {id}})
-        if (user) {
-            user.firstName = firstName.toLowerCase()
-            user.lastName = lastName
-            user.email = email
-            user.birth = birth
-            user.gender = gender
-            user.telegram = telegram
-            user.whatsapp = whatsapp
-            user.image = image
-            user.address1 = address1
-            user.address2 = address2
-            user.facebook = facebook
-            user.tiktok = tiktok
-            user.instagram = instagram
-            user.linkedin = linkedin
-            user.city = city
-            user.country = country
-            user.state = state
-            user.postalCode = postalCode
-            user.youtube = youtube
-            await user.save()
-            return res.json(user)
-        } else return res.json({err: "You cant change credentials"})
-    } catch (e) {
+        if (email) {
+            const condidate = await Users.findOne({
+                where: {
+                    email
+                }
+            })
+            if (!condidate) {
+                const user = await Users.findOne({where: {id}})
+                if (user) {
+                    user.firstName = firstName.toLowerCase()
+                    user.lastName = lastName
+                    user.email = email
+                    user.birth = birth
+                    user.gender = gender
+                    user.telegram = telegram
+                    user.whatsapp = whatsapp
+                    user.image = image
+                    user.address1 = address1
+                    user.address2 = address2
+                    user.facebook = facebook
+                    user.tiktok = tiktok
+                    user.instagram = instagram
+                    user.linkedin = linkedin
+                    user.city = city
+                    user.country = country
+                    user.state = state
+                    user.postalCode = postalCode
+                    user.youtube = youtube
+                    await user.save()
+                    return res.json(user)
+                } else {
+                    return res.json({message: "User with this email exist"})
+                }
+            }
+        } else {
+            const user = await Users.findOne({where: {id}})
+            if (user) {
+                user.firstName = firstName.toLowerCase()
+                user.lastName = lastName
+                user.email = email
+                user.birth = birth
+                user.gender = gender
+                user.telegram = telegram
+                user.whatsapp = whatsapp
+                user.image = image
+                user.address1 = address1
+                user.address2 = address2
+                user.facebook = facebook
+                user.tiktok = tiktok
+                user.instagram = instagram
+                user.linkedin = linkedin
+                user.city = city
+                user.country = country
+                user.state = state
+                user.postalCode = postalCode
+                user.youtube = youtube
+                await user.save()
+                return res.json(user)
+            }
+        }
+    } catch
+        (e) {
         console.log('something went wrong', e)
     }
 }
@@ -380,14 +418,17 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
     try {
         const {id} = req.query
-        const user = await Users.findOne({
-            where: {id},
-            include: [{
-                model: UserSports,
-                include: [Sport]
-            }]
-        })
-        return res.json(user)
+        if(id){
+            const user = await Users.findOne({
+                where: {id},
+                include: [{
+                    model: UserSports,
+                    include: [Sport]
+                }]
+            })
+            return res.json(user)
+        }else return res.json(true)
+
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -466,25 +507,25 @@ const changePassword = async (req, res) => {
     }
 }
 
- const getReceiversSearch = async (req,res) => {
-    try{
-        const { search,id} = req.query
+const getReceiversSearch = async (req, res) => {
+    try {
+        const {search, id} = req.query
         let queryObj = {}
         if (search) {
             queryObj["firstName"] = {
                 [Op.like]: '%' + String(search) + '%'
             }
             const items = await Users.findAll({
-                where:queryObj
+                where: queryObj
             })
-            const result = await items.filter(i=> i.id !== id)
+            const result = await items.filter(i => i.id !== id)
 
             return res.json(result)
-        }else{
+        } else {
             return res.json([])
         }
-    }catch (e) {
-        console.log('something went wrong',e)
+    } catch (e) {
+        console.log('something went wrong', e)
     }
 }
 
