@@ -27,7 +27,7 @@ const myInvites = async (req, res) => {
     try {
         const {id} = req.query
         const myInvites = await Invite.findAll({
-            where: {receiver_id: id},
+            where: {receiver_id: id,status: "new"},
             include: [{
                 model: Team,
                 include: [Sport]
@@ -43,7 +43,7 @@ const mySendedInvites = async (req, res) => {
     try {
         const {id} = req.query
         const mySendedInvites = await Invite.findAll({
-            where: {sender_id: id},
+            where: {sender_id: id,status: "new"},
             include: [{
                 model: Team,
                 include: [Sport]
@@ -60,7 +60,9 @@ const mySendedInvites = async (req, res) => {
 const reject = async (req, res) => {
     try {
         const {id} = req.body
-        await Invite.destroy({where: {id}})
+         const invite =   await Invite.findOne({where: {id}})
+        invite.status = "reject"
+        await invite.save()
         return res.json({message: "Invite rejected!"})
     } catch (e) {
         console.log('something went weong', e)
@@ -74,12 +76,12 @@ const accept = async (req, res) => {
             user_id: id,
             team_id: teamId
         })
-        await Invite.destroy({
-            where: {
-                team_id: teamId,
-                receiver_id: id,
-            }
-        })
+        // await Invite.destroy({
+        //     where: {
+        //         team_id: teamId,
+        //         receiver_id: id,
+        //     }
+        // })
         return res.json(newUserTeam)
     } catch (e) {
         console.log('something went wrong', e)
@@ -116,6 +118,61 @@ const inviteWithEmail = async (req,res) => {
     }
 }
 
+const singleTeamInviteHistory =async (req,res) => {
+    try{
+        const {id} = req.query
+        const teamInvite = await Invite.findAll({
+            where:{
+                team_id:id
+            },
+            include: [{
+                model: Team,
+                include: [Sport]
+            },{
+                model:User
+            }]
+        })
+        const accepted =  await Invite.findAll({
+            where:{
+                team_id:id,
+                status: "accept",
+            },
+            include: [{
+                model: Team,
+                include: [Sport]
+            },{
+                model:User
+            }]
+        })
+        const rejected =  await Invite.findAll({
+            where:{
+                team_id:id,
+                status: "reject",
+            },
+            include: [{
+                model: Team,
+                include: [Sport]
+            },{
+                model:User
+            }]
+        })
+        const pending =  await Invite.findAll({
+            where:{
+                team_id:id,
+                status: "new",
+            },
+            include: [{
+                model: Team,
+                include: [Sport]
+            },{
+                model:User
+            }]
+        })
+        return res.json({all:teamInvite.length,accepted:accepted.length,rejected:rejected.length,pending:pending.length})
+    }catch (e) {
+        console.log("something went wrong", e)
+    }
+}
 
 module.exports = {
     create,
@@ -123,5 +180,6 @@ module.exports = {
     mySendedInvites,
     reject,
     accept,
-    inviteWithEmail
+    inviteWithEmail,
+    singleTeamInviteHistory
 }

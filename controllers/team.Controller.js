@@ -25,11 +25,10 @@ const create = async (req, res) => {
 
 const editTeam = async (req, res) => {
     try {
-        const {id, name, image, sport_id} = req.body
+        const {id, name, image} = req.body
         const team = await Team.findOne({where: {id}})
         team.name = name
         team.image = image
-        team.sport_id = sport_id
         await team.save()
         return res.json(team)
     } catch (e) {
@@ -62,8 +61,22 @@ const deleteTeamMete = async (req, res) => {
     try {
         const {id, creator_id, teamMeteId} = req.body
 
-        const team = await Team.findOne({where: {id}})
-        if (team.creator_id !== creator_id) {
+        const team = await Team.findOne({
+            where: {id}, include: [
+                {
+                    model: UserTeam,
+                    include: {
+                        model: User,
+                        where: {
+                            status
+                        }
+                    }
+                },
+                Sport]
+        })
+
+        if (team.creator_id !== Number(creator_id)) {
+
             return res.json({message: "You cant delete this teamete"})
         } else {
             const teamMete = await UserTeam.destroy({
@@ -84,8 +97,12 @@ const myTeams = async (req, res) => {
         const {id} = req.query
 
         const userTeams = await Team.findAll({
-            where: {creator_id: id},
-            include: [{model: UserTeam, include: [User]}, Sport]
+            // where: {creator_id: id},
+            include: [{
+                model: UserTeam, include: [User], where: {
+                    user_id: id
+                }
+            }, Sport]
         })
 
         return res.json(userTeams)
@@ -96,12 +113,37 @@ const myTeams = async (req, res) => {
 
 const getSingle = async (req, res) => {
     try {
-        const {id} = req.query
-        const item = await Team.findOne({
-            where: {id},
-            include: [{model: UserTeam, include: [User]}, Sport]
-        })
-        return res.json(item)
+        const {id, status} = req.query
+        if (status) {
+            const item = await Team.findOne({
+                where: {id},
+                include: [
+                    {
+                        model: UserTeam,
+                        include: {
+                            model: User,
+                            where: {
+                                status
+                            }
+                        }
+                    },
+                    Sport]
+            })
+            return res.json(item)
+        } else {
+            const item = await Team.findOne({
+                where: {id},
+                include: [
+                    {
+                        model: UserTeam,
+                        include: {
+                            model: User,
+                        }
+                    },
+                    Sport]
+            })
+            return res.json(item)
+        }
     } catch (e) {
         console.log('something went wrong', e)
     }

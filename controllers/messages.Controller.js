@@ -97,7 +97,7 @@ const receivers = async (req, res) => {
                 model: Message,
                 order: [
                     ['seen', false]
-                ]
+                ],
                 // include: [sequelize.fn('COUNT', sequelize.col('seen')), 'seen']
             },{
                 model:User,
@@ -191,7 +191,7 @@ const notifications = async (req,res) => {
 
         return res.json({count:myMessages.length,messages:myMessages})
     }catch (e) {
-        console.log('somrthing went wrong',e)
+        console.log('something went wrong',e)
     }
 }
 

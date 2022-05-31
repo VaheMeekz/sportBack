@@ -29,4 +29,7 @@ router.get('/info',userController.info)
 router.post('/addCode',userController.conformPasswordAddCode)
 router.post('/checkCode',userController.checkVerifyCode)
 router.post('/newPassword',userController.newPassword)
+
+//chat search
+router.get('/receiversSearch',userController.getReceiversSearch)
 module.exports = router;

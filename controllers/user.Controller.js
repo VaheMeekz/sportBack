@@ -27,7 +27,6 @@ function generateString(length) {
 const checkNumber = async (req, res) => {
     try {
         const {number, type, email} = req.body
-        console.log(email, "...")
         const code = generateString(8)
         let testEmailAccount = await nodemailer.createTestAccount()
         if (type == "1") {
@@ -244,7 +243,6 @@ const edit = async (req, res) => {
 const changeAvatar = async (req, res) => {
     try {
         const {id, image} = req.body
-        console.log(id, image, "...............")
         const user = await Users.findOne({
             where: {id}
         })
@@ -343,7 +341,6 @@ const getAll = async (req, res) => {
     const offset = Number.parseInt(req.query.offset) || 0;
     const limit = Number.parseInt(req.query.limit) || 6;
     const count = await Users.findAll()
-    console.log(search, "++++++")
     let queryObj = {}
     if (search) {
         queryObj["firstName"] = {
@@ -355,9 +352,7 @@ const getAll = async (req, res) => {
             [Op.eq]: status
         }
     }
-    console.log(queryObj, "[][][][][][][][][][][][")
     try {
-        // if (status) {
         const allUsers = await Users.findAll({
             where: {
                 ...queryObj
@@ -370,17 +365,6 @@ const getAll = async (req, res) => {
             }]
         })
         return res.json({paginateUsers: allUsers, count: count.length})
-        // } else {
-        //     const allUsers = await Users.findAll({
-        //         include: [{
-        //             model: UserSports,
-        //             include: [Sport],
-        //             offset: offset * limit,
-        //             limit,
-        //         }]
-        //     })
-        //     return res.json({paginateUsers: allUsers, count: count.length})
-        // }
     } catch (e) {
         console.log('something went wrong', e)
     }
@@ -475,6 +459,28 @@ const changePassword = async (req, res) => {
     }
 }
 
+ const getReceiversSearch = async (req,res) => {
+    try{
+        const { search,id} = req.query
+        let queryObj = {}
+        if (search) {
+            queryObj["firstName"] = {
+                [Op.like]: '%' + String(search) + '%'
+            }
+            const items = await Users.findAll({
+                where:queryObj
+            })
+            const result = await items.filter(i=> i.id !== id)
+
+            return res.json(result)
+        }else{
+            return res.json([])
+        }
+    }catch (e) {
+        console.log('something went wrong',e)
+    }
+}
+
 module.exports = {
     checkNumber,
     create,
@@ -492,5 +498,6 @@ module.exports = {
     checkVerifyCode,
     newPassword,
     changePassword,
-    changeAvatar
+    changeAvatar,
+    getReceiversSearch
 }
