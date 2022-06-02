@@ -26,23 +26,28 @@ function generateString(length) {
 
 const checkNumber = async (req, res) => {
     try {
-        console.log("421346125485124585123546312546312451235456")
         const {number, type, email} = req.body
+        console.log(number, type, email,"number, type, email")
         const code = generateString(8)
         let testEmailAccount = await nodemailer.createTestAccount()
         if (type == "1") {
-            wbm.start({qrCodeData: true, session: false, showBrowser: false})
-                .then(async qrCodeData => {
-                    res.send(qrCodeData);
-                    await wbm.waitQRCode();
-                    const phones = number;
-                    const message = code;
-                    await wbm.send(phones, message);
-                    await wbm.end();
-                }).catch(err => console.log(err, "eee"));
-            await Verify.create({
-                email: "", code, number
+            const newUser = await Users.create({
+                whatsapp:number
             })
+
+            return res.json({user:newUser,answer:"next"})
+            // wbm.start({qrCodeData: true, session: false, showBrowser: false})
+            //     .then(async qrCodeData => {
+            //         res.send(qrCodeData);
+            //         await wbm.waitQRCode();
+            //         const phones = number;
+            //         const message = code;
+            //         await wbm.send(phones, message);
+            //         await wbm.end();
+            //     }).catch(err => console.log( "something went wrong",err));
+            // await Verify.create({
+            //     email: "", code, number
+            // })
         } else if (type == "2") {
             let transporter = await nodemailer.createTransport({
                 service: "gmail",
