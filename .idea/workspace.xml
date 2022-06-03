@@ -29,7 +29,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Admin_panel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -63,6 +63,7 @@
       <workItem from="1653996188288" duration="8478000" />
       <workItem from="1654013853363" duration="3022000" />
       <workItem from="1654023275812" duration="19148000" />
+      <workItem from="1654257235980" duration="1189000" />
     </task>
     <servers />
   </component>
