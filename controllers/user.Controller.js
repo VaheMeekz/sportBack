@@ -10,7 +10,6 @@ const fetch = require('cross-fetch');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const wbm = require("../utils/wbm");
 const text = require("../utils/data/data").verificationText
 const characters = require("../utils/data/data").characters
 const {Op} = require('sequelize');
@@ -27,27 +26,14 @@ function generateString(length) {
 const checkNumber = async (req, res) => {
     try {
         const {number, type, email} = req.body
-        console.log(number, type, email,"number, type, email")
+        console.log(number, type, email, "number, type, email")
         const code = generateString(8)
         let testEmailAccount = await nodemailer.createTestAccount()
         if (type == "1") {
             const newUser = await Users.create({
-                whatsapp:number
+                whatsapp: number
             })
-
-            return res.json({user:newUser,answer:"next"})
-            // wbm.start({qrCodeData: true, session: false, showBrowser: false})
-            //     .then(async qrCodeData => {
-            //         res.send(qrCodeData);
-            //         await wbm.waitQRCode();
-            //         const phones = number;
-            //         const message = code;
-            //         await wbm.send(phones, message);
-            //         await wbm.end();
-            //     }).catch(err => console.log( "something went wrong",err));
-            // await Verify.create({
-            //     email: "", code, number
-            // })
+            return res.json({user: newUser, answer: "next"})
         } else if (type == "2") {
             let transporter = await nodemailer.createTransport({
                 service: "gmail",
@@ -73,6 +59,8 @@ const checkNumber = async (req, res) => {
             await Verify.create({
                 email, code, number: ""
             })
+        } else {
+            return res.json(false)
         }
     } catch (e) {
         console.log("something went wrong", e)
@@ -423,7 +411,7 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
     try {
         const {id} = req.query
-        if(id){
+        if (id) {
             const user = await Users.findOne({
                 where: {id},
                 include: [{
@@ -432,7 +420,7 @@ const getSingle = async (req, res) => {
                 }]
             })
             return res.json(user)
-        }else return res.json(true)
+        } else return res.json(true)
 
     } catch (e) {
         console.log('something went wrong', e)
