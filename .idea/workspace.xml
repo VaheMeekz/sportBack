@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dadc7efd-e130-46e2-99c6-f149f49e12bb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/user.Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.Controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +29,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../fantasticLifeFront" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Admin_panel" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -64,7 +62,7 @@
       <workItem from="1653991985977" duration="2062000" />
       <workItem from="1653996188288" duration="8478000" />
       <workItem from="1654013853363" duration="3022000" />
-      <workItem from="1654023275812" duration="9202000" />
+      <workItem from="1654023275812" duration="19148000" />
     </task>
     <servers />
   </component>
